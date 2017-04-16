@@ -7,12 +7,13 @@ Coding
 [![Swift Version](https://img.shields.io/badge/Swift-3-F16D39.svg)](https://developer.apple.com/swift)
 
 
-Coding is Swifty NSCoding.
+Coding is more Swifty NSCoding.
+It can archive even pure Swift class and struct.
 
 # How to use
 
 ```swift
-struct SimpleStruct: Coding {
+struct DataModel: Coding {
     let string: String
     let integer: Int
     let double: Double
@@ -29,17 +30,17 @@ struct SimpleStruct: Coding {
         coder.encode(double, for: .double)
     }
     
-    static func decode(with decoder: Decoder<Key>) -> SimpleStruct? {
+    static func decode(with decoder: Decoder<Key>) -> DataModel? {
         guard let string = decoder.decodeString(for: .string) else { return nil }
         let integer = decoder.decodeInteger(for: .integer)
         let double = decoder.decodeDouble(for: .double)
-        return SimpleStruct(string: string, integer: integer, double: double)
+        return DataModel(string: string, integer: integer, double: double)
     }
 }
 
-let simpleStruct = SimpleStruct(string: "Hello", integer: 123, double: 3.14)
-let data = simpleStruct.archive()
-let result = SimpleStruct.unarchive(with: data)
+let model: DataModel = DataModel(string: "Hello", integer: 123, double: 3.14)
+let data: Data = model.archive()
+let unarchivedModel: DataModel = DataModel.unarchive(with: data)
 ```
 
 # Installation
